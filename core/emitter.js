@@ -9,7 +9,8 @@ const supportsRootNode = ('getRootNode' in document);
 
 EVENTS.forEach(eventName => {
   document.addEventListener(eventName, (...args) => {
-    Array.from(document.querySelectorAll('.ql-container')).forEach(node => {
+    const nodes = event.path.filter(node => node.classList && node.classList.contains('ql-container'));
+    nodes.forEach(node => {
       const quill = instances.get(node);
       if (quill && quill.emitter) {
         quill.emitter.handleDOM(...args);

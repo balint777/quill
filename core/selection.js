@@ -91,10 +91,11 @@ class Selection {
   }
 
   handleDragging() {
-    this.emitter.listenDOM('mousedown', document.body, () => {
+    let target = this.rootDocument.body || Array.from(this.rootDocument.children).find(node => ["STYLE"].indexOf(node.nodeName) == -1);
+    this.emitter.listenDOM('mousedown', target, () => {
       this.mouseDown = true;
     });
-    this.emitter.listenDOM('mouseup', document.body, () => {
+    this.emitter.listenDOM('mouseup', target, () => {
       this.mouseDown = false;
       this.update(Emitter.sources.USER);
     });
@@ -177,7 +178,6 @@ class Selection {
   }
 
   getNativeRange() {
-    // const selection = document.getSelection();
     const selection = this.rootDocument.getSelection();
     if (selection == null || selection.rangeCount <= 0) return null;
     const nativeRange = selection.getRangeAt(0);
@@ -319,7 +319,6 @@ class Selection {
     ) {
       return;
     }
-    // const selection = document.getSelection();
     const selection = this.rootDocument.getSelection();
     if (selection == null) return;
     if (startNode != null) {
