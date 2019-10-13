@@ -21,7 +21,7 @@ class Selection {
     this.mouseDown = false;
     this.root = this.scroll.domNode;
     this.cursor = this.scroll.create('cursor', this);
-    this.rootDocument = (this.root.getRootNode ? this.root.getRootNode() : document);
+    this.rootDocument = (this.root.getRootNode && this.root.getRootNode().getSelection ? this.root.getRootNode() : document);
     // console.log('Selection', this.rootDocument);
     // savedRange is last non-null range
     this.savedRange = new Range(0, 0);
